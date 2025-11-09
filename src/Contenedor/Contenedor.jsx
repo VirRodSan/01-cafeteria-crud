@@ -6,6 +6,7 @@ import { useState } from "react"
 
 export default function Contenedor({categorias}){
     const [stateCategoria, setCategorias] = useState(categorias)
+    
     return(
         <>
             <Header/>

@@ -12,6 +12,7 @@ export default function Body({categorias, setCategorias}){
             arrayProductos = {categoria.products}
             categorias = {categorias}
             setCategorias = {setCategorias}
+            
         />
     
     )

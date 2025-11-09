@@ -104,7 +104,7 @@ img {
     flex: 1; 
 }
 
-.papeleraProducto, .modificarProducto{
+.papeleraProducto, .modificarProducto, .insertarProducto{
     padding: 5px 7px;
     border: none;
     border-radius: 4px;
@@ -115,6 +115,14 @@ img {
     justify-content: center;
 }
 
+.insertarProducto{
+    background: #257136;
+    color: white;
+}
+.insertarProducto:hover{
+    background: #153d1e;
+    transform: scale(1.1);
+}
 
 .papeleraProducto{
     background: #e74c3c;

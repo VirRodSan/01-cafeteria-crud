@@ -4,18 +4,57 @@ import { Trash2, Pencil, Plus } from 'lucide-react'
 import { useState } from "react"
 
 
-export default function Categorias({idCategoria,nameCategoria,imgCategoria,arrayProductos,categorias,setCategorias}) {
-
-    console.log(`Categoria: ${nameCategoria}, ID: ${idCategoria}`)
+export default function Categorias({
+    idCategoria,
+    nameCategoria,
+    imgCategoria,
+    arrayProductos,
+    categorias,
+    setCategorias}) {
 
     const[mostrarInsertar,setMostrarInsertar]=useState(false)
+
+    const manejarProductoEliminado = (idProductoAEliminar, idCategoriaOrigen) => {
+        setCategorias(prev => ({
+            ...prev,
+            menu: prev.menu.map(categoria => {
+                if (categoria.idCategoria === idCategoriaOrigen) {
+                    return {
+                        ...categoria,
+                        products: categoria.products.filter(producto => producto.idProduct !== idProductoAEliminar)
+                    }
+                }
+                return categoria
+            })
+        }))
+    }
+
+    const manejarProductoInsertado = (idCategoriaDestino, nuevoProducto) => {
+        setCategorias(prev => ({
+            ...prev,
+            menu: prev.menu.map(categoria => {
+                if (categoria.idCategoria === idCategoriaDestino) {
+                    return {
+                        ...categoria,
+                        products: [...categoria.products, nuevoProducto]
+                    }
+                }
+                return categoria
+            })
+        }))
+    }
 
     const listaProductos = arrayProductos.map(producto =>
         <Producto 
             key = {producto.idProduct}
+            idProducto={producto.idProduct}
             nombreProducto = {producto.name}
-            precioProducto = {producto.price}            
-         />
+            precioProducto = {producto.price}
+            idCategoria={idCategoria}
+            arrayProductos={arrayProductos}
+            onProductoEliminado={manejarProductoEliminado}  
+            onProductoInsertado={manejarProductoInsertado} 
+        />
     )
 
     const EliminarCategoria = (idEliminar) => {
