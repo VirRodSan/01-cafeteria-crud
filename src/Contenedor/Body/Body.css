@@ -1,0 +1,126 @@
+.categoria {
+    margin-bottom: 30px;
+    
+}
+.categoria-titulo {
+    color: #333;
+    font-size: 1.8rem;
+    text-align: center;
+    grid-column: 1;
+}
+
+.productos-lista {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    margin-bottom: 5px;
+}
+
+.name {
+    
+    margin: 0;
+}
+
+.price {
+    
+    margin-right: 10px;
+    
+}
+.contenedorCategoria{
+    display: grid;
+    grid-template-areas: 
+        "titulo botones"
+        "imagen imagen";
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+}
+.contenedorBotones{
+    grid-area: botones;
+    display: flex;
+    gap: 6px;
+}
+img {
+    grid-area: imagen;
+    width: 100%;
+    max-width: 50px;
+    height: auto;
+    border-radius: 6px;
+    margin: 0 auto;
+    display: block;
+}
+.papeleraCategoria, .modificarCategoria{
+    padding: 8px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.papeleraCategoria{
+    background: #e74c3c;
+    color: white;
+}
+.papeleraCategoria:hover{
+    background: #c0392b;
+    transform: scale(1.1);
+}
+.modificarCategoria{
+    background: #643ce7;
+    color: white;
+}
+.modificarCategoria:hover{
+    background: #2f1b73;
+    transform: scale(1.1);
+}
+
+.contenedorProducto{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+}
+.infoProducto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1; 
+}
+
+.papeleraProducto, .modificarProducto{
+    padding: 5px 7px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.papeleraProducto{
+    background: #e74c3c;
+    color: white;
+ }
+.papeleraProducto:hover{
+    background: #c0392b;
+    transform: scale(1.1);
+}
+.modificarProducto{
+    background: #643ce7;
+    color: white;
+}
+.modificarProducto:hover{
+    background: #2f1b73;
+    transform: scale(1.1);
+}

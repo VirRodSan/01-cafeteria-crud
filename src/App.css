@@ -1,0 +1,13 @@
+.fondo {
+  background-image: url('https://cdn.freecodecamp.org/curriculum/css-cafe/beans.jpg');
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.contenedor {
+  background-color: burlywood;
+  margin: auto;
+  max-width: 600px; 
+  padding: 20px;
+  border-radius: 10px;
+}
