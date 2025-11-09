@@ -50,7 +50,7 @@ export default function InsertarCategoria({categorias, setCategorias, onCategori
                 placeholder="Categoria..." 
                 value={nuevaCategoria}
                 onChange={(e) => setNuevaCategoria(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && incluirCategoria()}
+                onKeyDown={(e) => e.key === "Enter" && incluirCategoria()}
             />
             <button onClick={incluirCategoria}>Añadir Categoria</button>
         </div>
