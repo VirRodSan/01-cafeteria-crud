@@ -1,6 +1,6 @@
 import Categorias from "./Categorias/Categorias"
 
-export default function Body({categorias}){
+export default function Body({categorias, setCategorias}){
 
     const listaCategorias = categorias.menu.map(categoria => 
         <Categorias
@@ -8,6 +8,8 @@ export default function Body({categorias}){
             nameCategoria = {categoria.nameCategoria}
             imgCategoria = {categoria.imgCategoria}
             arrayProductos = {categoria.products}
+            categorias = {categorias}
+            setCategorias = {setCategorias}
         />
     
     )

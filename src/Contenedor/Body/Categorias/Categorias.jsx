@@ -1,9 +1,12 @@
 import Producto from "./Productos/Producto"
-import "../Body.css"
-import { Trash2, Pencil } from 'lucide-react';
+import InsertarCategoria from "./InsertarCategoria.jsx"
+import { Trash2, Pencil, Plus } from 'lucide-react'
+import { useState } from "react"
 
 
-export default function Categorias({idCategoria,nameCategoria,imgCategoria,arrayProductos}) {
+export default function Categorias({idCategoria,nameCategoria,imgCategoria,arrayProductos,categorias,setCategorias}) {
+
+    const[mostrarInsertar,setMostrarInsertar]=useState(false)
 
     const listaProductos = arrayProductos.map(producto =>
         <Producto 
@@ -17,13 +20,22 @@ export default function Categorias({idCategoria,nameCategoria,imgCategoria,array
         <>
         <div className="contenedorCategoria">
             <h2 className="categoria-titulo">{nameCategoria}</h2>
-            <img src={imgCategoria} alt="" />
+            {imgCategoria && <img src={imgCategoria} alt="" />}
             <div className="contenedorBotones">
                 <button className="papeleraCategoria"> <Trash2 /> </button> 
                 <button className="modificarCategoria"> <Pencil /> </button>
+                <button className="insertarCategoria" 
+                    onClick={()=>setMostrarInsertar(!mostrarInsertar)}> <Plus /> </button>
             </div> 
-        </div>    
-                {listaProductos}
+        </div>   
+        { mostrarInsertar && (
+            <InsertarCategoria
+                categorias={categorias}
+                setCategorias={setCategorias}
+                onCategoriaInsertada={()=>setMostrarInsertar(false)}
+                />
+        )} 
+        {listaProductos}
             
         </>
     )
