@@ -9,7 +9,7 @@ export default function Contenedor({categorias}){
     
     return(
         <>
-            <Header/>
+            <Header setCategorias={setCategorias}/>
             <Spacer/>
             <Body categorias ={stateCategoria} setCategorias={setCategorias}/>
             <Spacer/>

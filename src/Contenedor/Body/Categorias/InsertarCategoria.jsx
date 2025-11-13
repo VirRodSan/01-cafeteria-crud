@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function InsertarCategoria({categorias, setCategorias, onCategoriaInsertada}){
+export default function InsertarCategoria({setCategorias, onCategoriaInsertada}){
     
     const [nuevaCategoria,setNuevaCategoria] = useState("")
     
@@ -15,6 +15,7 @@ export default function InsertarCategoria({categorias, setCategorias, onCategori
             // Averiguamos cuál es el último id existente
             const ultimoId = menu.length > 0 ? 
                 Math.max(...menu.map(cat => cat.idCategoria)) : 0
+            
             // Creamos el nuevo objeto categoria
             const nuevaCategoriaObjeto = {
                 idCategoria: ultimoId +1 ,
@@ -22,26 +23,23 @@ export default function InsertarCategoria({categorias, setCategorias, onCategori
                 imgCategoria:"",
                 products:[]
             }
+            
             return{
                 ...preCategorias,
                 menu:[...menu,nuevaCategoriaObjeto]
             }
         })
         setNuevaCategoria("")
-
         if (onCategoriaInsertada){
             onCategoriaInsertada()
         }
-    }
+    }   
     //Si el usuario pulsa enter llamamos a la función
-    const handleKeyPress =(e) => {
+    const handleKeyDown  =(e) => {
         if (e.key === 'Enter'){
             incluirCategoria()
         }
     }
-    
-    
-    
     
     return(
         <div className="insertarCategoria">
@@ -50,9 +48,10 @@ export default function InsertarCategoria({categorias, setCategorias, onCategori
                 placeholder="Categoria..." 
                 value={nuevaCategoria}
                 onChange={(e) => setNuevaCategoria(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && incluirCategoria()}
+                onKeyDown={handleKeyDown}
             />
             <button onClick={incluirCategoria}>Añadir Categoria</button>
         </div>
+
     )
 }

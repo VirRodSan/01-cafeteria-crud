@@ -2,31 +2,29 @@ import "../../Body.css"
 import InsertarProducto from "./InsertarProducto.jsx"
 import { Trash2, Pencil, Plus } from 'lucide-react';
 import { useState } from "react";
+import ModificarProducto from "./ModificarProducto.jsx";
 
 export default function Producto({
     idProducto,
     nombreProducto,
     precioProducto,
     idCategoria,
-    arrayProductos,
-    onProductoEliminado,
-    onProductoInsertado    
+    setCategorias,
+    onProductoEliminado    
 }){
-    const [mostrarInsertarProducto, setMostrarInsertarProducto] = useState(false)
+    const[mostrarModificarProducto,setMostrarModificarProducto]=useState(false)
     
-    const eliminarProducto =() => {
+    const eliminarProducto = () => {
         if (onProductoEliminado) {
             onProductoEliminado(idProducto,idCategoria)
         }
     }
 
-    const insertarProducto = (nuevoProducto) => {
-        if (onProductoInsertado){
-            onProductoInsertado(idCategoria,nuevoProducto)
-        }
-        setMostrarInsertarProducto(false)
+    const productoActual ={
+        idProduct: idProducto,
+        name: nombreProducto,
+        price: precioProducto
     }
-
 
     return(
         <>
@@ -36,21 +34,23 @@ export default function Producto({
                 <span className="price">{precioProducto}€</span>
             </div>
             <div className="contenedorBotones">
-                <button className="papeleraProducto"
-                        onClick = {eliminarProducto}> 
+                <button 
+                    className="papeleraProducto"
+                    onClick={eliminarProducto}> 
                     <Trash2 size={14} /> </button> 
-                <button className="modificarProducto"> <Pencil size={14}/> </button>
-                <button className="insertarProducto" 
-                    onClick={()=>setMostrarInsertarProducto(!mostrarInsertarProducto)}> <Plus size={14} /> </button>
-            </div>
-    </div>
-    { mostrarInsertarProducto && (
-            <InsertarProducto
-                arrayProductos={arrayProductos}
-                onProductoInsertado={insertarProducto}
-                
-            />
-        )} 
+                <button className="modificarProducto"
+                    onClick={()=>setMostrarModificarProducto(!mostrarModificarProducto)}
+                > <Pencil size={14}/> </button>
+            </div>    
+        </div>
+        { mostrarModificarProducto && (
+                    <ModificarProducto
+                        producto = {productoActual}
+                        idCategoria={idCategoria}
+                        setCategorias = {setCategorias}
+                        onProductoModificado = {()=>setMostrarModificarProducto(false)}
+                    />
+                )}   
     </>
     )
 }
