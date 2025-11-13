@@ -1,68 +1,79 @@
-import Producto from "./Productos/Producto"
-import InsertarCategoria from "./InsertarCategoria.jsx"
+
 import { Trash2, Pencil, Plus } from 'lucide-react'
 import { useState } from "react"
-
-
+import InsertarProducto from './Productos/InsertarProducto'
+import Producto from './Productos/Producto'
+import ModificarCategoria from './ModificarCategoria'
 export default function Categorias({
     idCategoria,
     nameCategoria,
     imgCategoria,
     arrayProductos,
-    categorias,
     setCategorias}) {
 
-    const[mostrarInsertar,setMostrarInsertar]=useState(false)
-
-    const manejarProductoEliminado = (idProductoAEliminar, idCategoriaOrigen) => {
-        setCategorias(prev => ({
-            ...prev,
-            menu: prev.menu.map(categoria => {
-                if (categoria.idCategoria === idCategoriaOrigen) {
-                    return {
-                        ...categoria,
-                        products: categoria.products.filter(producto => producto.idProduct !== idProductoAEliminar)
+    const[mostrarInsertarProducto,setMostrarInsertarProducto]=useState(false)
+    const[mostrarModificarCategoria,setMostrarModificarCategoria]=useState(false)
+        const controlProductoEliminado = (idProductoEliminar, idCategoriaOrigen) => {
+            setCategorias(prev => ({
+                ...prev,
+                menu: prev.menu.map(categoria => {
+                    if (categoria.idCategoria === idCategoriaOrigen) {
+                        return {
+                            ...categoria,
+                            products: categoria.products.filter(producto =>
+                                producto.idProduct !== idProductoEliminar
+                            )
+                        }
                     }
-                }
-                return categoria
-            })
-        }))
-    }
 
-    const manejarProductoInsertado = (idCategoriaDestino, nuevoProducto) => {
-        setCategorias(prev => ({
-            ...prev,
-            menu: prev.menu.map(categoria => {
-                if (categoria.idCategoria === idCategoriaDestino) {
-                    return {
-                        ...categoria,
-                        products: [...categoria.products, nuevoProducto]
+                    return categoria
+                }
+                )
+            })
+            )
+        }
+        const controlProductoInsertado = (nuevoProducto) => {
+            setCategorias(prev => ({
+                ...prev,
+                menu: prev.menu.map(categoria => {
+                    if (categoria.idCategoria === idCategoria) {
+                        return {
+                            ...categoria,
+                            products:[...categoria.products, nuevoProducto]
+                        }
                     }
-                }
-                return categoria
-            })
-        }))
-    }
+                    return categoria
+                })
+            }))
+            setMostrarInsertarProducto(false)
+        }
 
-    const listaProductos = arrayProductos.map(producto =>
+
+
+        const listaProductos = arrayProductos.map(producto =>
         <Producto 
             key = {producto.idProduct}
             idProducto={producto.idProduct}
             nombreProducto = {producto.name}
             precioProducto = {producto.price}
             idCategoria={idCategoria}
-            arrayProductos={arrayProductos}
-            onProductoEliminado={manejarProductoEliminado}  
-            onProductoInsertado={manejarProductoInsertado} 
+            setCategorias={setCategorias}
+            onProductoEliminado={controlProductoEliminado}
         />
     )
 
-    const EliminarCategoria = (idEliminar) => {
-        setCategorias(preCategorias =>({
-            ...preCategorias,
-            menu: preCategorias.menu.filter(categoria => categoria.idCategoria !== idEliminar)
+        const EliminarCategoria = (idEliminar) => {
+            setCategorias(preCategorias =>({
+                ...preCategorias,
+                menu: preCategorias.menu.filter(categoria => categoria.idCategoria !== idEliminar)
         }))
     }
+
+        const categoriaActual = {
+            idCategoria,
+            nameCategoria,
+            imgCategoria
+        }
 
     return (
         <>
@@ -72,16 +83,24 @@ export default function Categorias({
             <div className="contenedorBotones">
                 <button className="papeleraCategoria"
                 onClick={()=>EliminarCategoria(idCategoria)}> <Trash2 /> </button> 
-                <button className="modificarCategoria"> <Pencil /> </button>
-                <button className="insertarCategoria" 
-                    onClick={()=>setMostrarInsertar(!mostrarInsertar)}> <Plus /> </button>
+                <button className="modificarCategoria"
+                    onClick={()=>setMostrarModificarCategoria(!mostrarModificarCategoria)}> <Pencil /> </button>
+                <button className="insertarProducto" 
+                    onClick={()=>setMostrarInsertarProducto(!mostrarInsertarProducto)}> <Plus /> </button>
             </div> 
-        </div>   
-        { mostrarInsertar && (
-            <InsertarCategoria
-                categorias={categorias}
+        </div>
+        { mostrarModificarCategoria && (
+            <ModificarCategoria 
+                categoria={categoriaActual}
                 setCategorias={setCategorias}
-                onCategoriaInsertada={()=>setMostrarInsertar(false)}
+                onCategoriaModificada={()=>setMostrarModificarCategoria(false)}
+            />
+        )}   
+        { mostrarInsertarProducto && (
+            <InsertarProducto
+                idCategoria={idCategoria}
+                arrayProductos={arrayProductos}
+                onProductoInsertado={controlProductoInsertado}
                 />
         )} 
         {listaProductos}

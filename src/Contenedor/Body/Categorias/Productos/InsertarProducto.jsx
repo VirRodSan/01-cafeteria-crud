@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 export default function InsertarProducto({
+    idCategoria,
     arrayProductos,
     onProductoInsertado
 }){
@@ -8,24 +9,27 @@ export default function InsertarProducto({
     const [nuevoProducto, setNuevoProducto] = useState({name:"",price:""})
 
     const incluirProducto = () => {
-        if(!nuevoProducto.name.trim() || !nuevoProducto.price)
-            return
+        if(!nuevoProducto.name.trim() || !nuevoProducto.price)             return
+        
         const precio = parseFloat(nuevoProducto.price)
-        if (isNaN(precio) || precio <= 0) 
-            return
+        
+        if (isNaN(precio) || precio <= 0) return
 
-        const ultimoId = arrayProductos.length > 0 ? 
-            Math.max(...arrayProductos.map(prod => prod.idProduct)) : 0
+        const productosExistentes = arrayProductos || []
+        const ultimoId = productosExistentes.length > 0 ? 
+            Math.max(...productosExistentes.map(prod => prod.idProduct)) : 0
 
         const producto = {
             idProduct: ultimoId+1,
             name: nuevoProducto.name,
             price: precio
         }
-        if (onProductoInsertado) {
+        if (onProductoInsertado){
             onProductoInsertado(producto)
         }
+
         setNuevoProducto({name:"",price:""})
+        
     }
 
     const handleKeyDown = (e) => {
